@@ -1,0 +1,19 @@
+a{
+    display: inline-block;
+    width: 120px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: aliceblue;
+    margin: 10px 8px;
+    text-align: center;
+    line-height: 40px;
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+  background-color: rgb(209, 232, 251);  
+}
+.active{
+  border: 2px solid rgb(209, 232, 251);  
+
+}

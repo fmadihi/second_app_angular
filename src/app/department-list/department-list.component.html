@@ -1,0 +1,8 @@
+<p>department-list works!</p>
+<section >
+    <div *ngFor="let item of technologies; let i = index" (click)="selectId(item.id)" [ngClass]="{selected: isSelected(item.id)}">
+      <span>{{ item.id }}</span>
+      <span>{{ item.name }}</span>
+    </div>
+</section>
+
