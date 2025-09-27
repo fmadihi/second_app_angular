@@ -3,3 +3,33 @@
 
 <!-- <app-department-list-details></app-department-list-details> -->
 <router-outlet />
+
+<hr />
+<app-comp1></app-comp1>
+<br />
+<app-comp2></app-comp2>
+
+<hr />
+<button (click)="subscribe()">subscribe</button>
+<button (click)="unsubscribe()">unsubscribe</button>
+
+<hr />
+<!-- 
+این خط مانع از رفتار پیش فرض دکمه submit
+میشود
+-->
+<h3>form handling</h3>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <label>username</label>
+  <input type="text" ngModel name="userName" />
+  <br />
+  <label>email</label>
+  <input type="text" ngModel name="email" />
+  <br />
+  <label for="sec">secret question</label>
+  <select id="sec" ngModel name="secretQuestion">
+    <option value="wBorn">where do you born?</option>
+    <option value="hOld">how old are you?</option>
+  </select>
+  <button type="submit">send</button>
+</form>
