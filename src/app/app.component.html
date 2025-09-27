@@ -19,17 +19,37 @@
 میشود
 -->
 <h3>form handling</h3>
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
-  <label>username</label>
-  <input type="text" ngModel name="userName" />
-  <br />
-  <label>email</label>
-  <input type="text" ngModel name="email" />
+<!-- <form (ngSubmit)="onSubmit(f)" #f="ngForm"> -->
+<form (ngSubmit)="onSubmit()" #f="ngForm">
+  <div ngModelGroup="userInfo" #userInfo="ngModelGroup">
+    <label>username</label>
+    <input type="text" ngModel name="userName" required />
+    <br />
+    <label>email</label>
+    <input type="email" ngModel name="email" required #email="ngModel" />
+    <span *ngIf="!email.valid && email.touched">please enter valid email!</span>
+  </div>
+  <span *ngIf="!userInfo.valid && userInfo.touched"
+    >please enter valid info!</span
+  >
   <br />
   <label for="sec">secret question</label>
-  <select id="sec" ngModel name="secretQuestion">
+  <select
+    id="sec"
+    ngModel
+    name="secretQuestion"
+    [ngModel]="defaultValueSecretQuestion"
+  >
     <option value="wBorn">where do you born?</option>
     <option value="hOld">how old are you?</option>
   </select>
-  <button type="submit">send</button>
+  <input type="text" name="questionAnswer" [(ngModel)]="answer" />
+  <div><span style="color: red">you wrote: </span>{{ answer }}</div>
+  <div *ngFor="let gend of genders">
+    <label for="">
+      <input type="radio" name="gend" ngModel [value]="gend" required />
+      {{ gend }}
+    </label>
+  </div>
+  <button type="submit" [disabled]="!f.valid">send</button>
 </form>

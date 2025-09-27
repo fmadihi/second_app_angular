@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DepartmentListDetailsComponent } from './department-list-details/department-list-details.component';
 import { filter, from, map, Observable, of } from 'rxjs';
@@ -6,7 +6,10 @@ import { Comp1Component } from './comp1/comp1.component';
 import { DataService } from './data.service';
 import { Comp2Component } from './comp2/comp2.component';
 import { interval } from 'rxjs';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { NgForOf, NgIf } from '@angular/common';
+
+
 @Component({
   selector: 'app-root',
   imports: [
@@ -17,7 +20,9 @@ import { FormsModule } from '@angular/forms';
     Comp1Component,
     Comp2Component,
     FormsModule,
-  ],
+    NgIf,
+    NgForOf
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [DataService],
@@ -147,7 +152,18 @@ export class AppComponent implements OnInit {
   }
 
   // form handling
-  onSubmit(form: any) {
-    console.log(form);
+  // onSubmit(form: any) {
+  //   console.log(form);
+  // }
+
+  // form handling with viewChild
+  @ViewChild('f') fromValues: NgForm | null = null;
+  onSubmit() {
+    console.log(this.fromValues);
   }
+
+  defaultValueSecretQuestion='wBorn'
+  answer:string=''
+
+  genders = ['male','female']
 }

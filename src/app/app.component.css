@@ -17,3 +17,40 @@ a:hover{
   border: 2px solid rgb(209, 232, 251);  
 
 }
+
+/* دو کلاسه نوشتیم که وقتی کاربر بهش دست زد و معتبر نبود قرمز شه */
+input.ng-invalid.ng-touched{
+border:2px solid rgb(172, 0, 0)
+}
+
+input[type=text],input[type=email],select{
+  width:300px;
+  height: 30px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin: 2px 0px;
+  display: block;
+  outline: none;
+}
+
+option{
+   width:300px;
+  height: 30px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin: 2px 0px;
+  display: block;
+}
+
+form>div{
+  margin: 10px 0px;
+}
+form>button{
+  width:150px;
+  height: 30px;
+  border: 1px solid lightgray;
+  background-color: rgb(85, 124, 197);
+  border-radius: 5px;
+  margin: 2px 0px;
+  color: white;
+}
