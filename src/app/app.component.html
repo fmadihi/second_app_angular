@@ -25,6 +25,14 @@
     <label>username</label>
     <input type="text" ngModel name="userName" required />
     <br />
+    <button
+      (click)="suggestUsername()"
+      style="background-color: rgb(202, 0, 0)"
+    >
+      suggest username
+    </button>
+    <br />
+    <br />
     <label>email</label>
     <input type="email" ngModel name="email" required #email="ngModel" />
     <span *ngIf="!email.valid && email.touched">please enter valid email!</span>
@@ -52,4 +60,63 @@
     </label>
   </div>
   <button type="submit" [disabled]="!f.valid">send</button>
+  <button (click)="setValues()" style="background-color: rgb(202, 0, 0)">
+    set default value
+  </button>
+</form>
+<section *ngIf="isSubmited">
+  <div>
+    <h3>Your Information...</h3>
+    <p>username: {{ user.uName }}</p>
+    <p>email: {{ user.email }}</p>
+    <p>secret question: {{ user.secretQ }}</p>
+    <p>answer: {{ user.answerQ }}</p>
+    <p>sex: {{ user.sex }}</p>
+  </div>
+</section>
+<br />
+<hr />
+<br />
+<h2>form handling By Reactives Forms</h2>
+<form [formGroup]="signForms" (ngSubmit)="onSubmit1()">
+  <div formGroupName="userData">
+    <label>username</label>
+    <input type="text" id="username" formControlName="username1" />
+    <span
+      *ngIf="
+        !signForms.get('userData.username1')!.valid &&
+        signForms.get('userData.username1')!.touched
+      "
+      >plz enter username</span
+    >
+    <br />
+    <label>email</label>
+    <input type="email" id="email" formControlName="email1" />
+    <span
+      *ngIf="
+        !signForms.get('userData.email1')!.valid &&
+        signForms.get('userData.email1')!.touched
+      "
+      >plz enter valid email</span
+    >
+  </div>
+  <div *ngFor="let gend1 of genders">
+    <label for="">
+      <input type="radio" [value]="gend1" formControlName="sex1" />
+      {{ gend1 }}
+    </label>
+  </div>
+  <div formArrayName="family1">
+    <h4>Your Family</h4>
+    <button (click)="addMember()">Add member</button>
+    <div *ngFor="let member of castedControlFamily,let i = index">
+      <input type="text" [formControlName]="i"/>
+    </div>
+  </div>
+  <button type="submit">send</button>
+  <button type="submit" (click)="resetForm()">reset</button>
+  <br />
+  <span *ngIf="!signForms!.valid && signForms!.touched"
+    >plz enter valid Data</span
+  >
 </form>

@@ -6,10 +6,25 @@ import { Comp1Component } from './comp1/comp1.component';
 import { DataService } from './data.service';
 import { Comp2Component } from './comp2/comp2.component';
 import { interval } from 'rxjs';
-import { FormsModule, NgForm } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormsModule,
+  NgForm,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';
-
-
+// برای reactive Forms باید ایمپورت شود
+import { FormGroup } from '@angular/forms';
+// تعریف اینترفیس برای اینکه بتوانیم مقادیر پر شده فرم را بگیریم و نمایش بدهیم
+interface IUser {
+  uName: string;
+  email: string;
+  secretQ: string;
+  answerQ: string;
+  sex: 'male' | 'female';
+}
 @Component({
   selector: 'app-root',
   imports: [
@@ -21,14 +36,19 @@ import { NgForOf, NgIf } from '@angular/common';
     Comp2Component,
     FormsModule,
     NgIf,
-    NgForOf
-],
+    NgForOf,
+    // برایreactive Forms باید اضافه شود
+    ReactiveFormsModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [DataService],
 })
 export class AppComponent implements OnInit {
   title = 'second_App_Routing';
+  isSubmited: boolean = false;
+  // برایreactive Forms باید اضافه شود
+  signForms: FormGroup;
 
   constructor(private dataService: DataService) {}
   // تعریف ابزرو ها - تا زمانی که آن را صدا نزنید اجرا نمیشود و اینکه به صورت استریم دیتا را بر میگرداند
@@ -133,6 +153,16 @@ export class AppComponent implements OnInit {
         alert('welldone, complete');
       },
     });
+
+    // دریافت و ارسال اطلاعات با reactives Forms
+    this.signForms = new FormGroup({
+      userData: new FormGroup({
+        username1: new FormControl(null, Validators.required),
+        email1: new FormControl(null, [Validators.required, Validators.email]),
+      }),
+      sex1: new FormControl(null),
+      family1: new FormArray([]),
+    });
   }
 
   // استفاده از کتابخونه
@@ -158,12 +188,61 @@ export class AppComponent implements OnInit {
 
   // form handling with viewChild
   @ViewChild('f') fromValues: NgForm | null = null;
+  // خط زیر باعث میشود که لازم نباشد تک تک متغیر ها را تعریف کنیم و مقدار دهی اولیه کنیم
+  user = {} as IUser;
   onSubmit() {
     console.log(this.fromValues);
+    this.user.uName = this.fromValues?.value.userInfo.userName;
+    this.user.email = this.fromValues?.value.userInfo.email;
+    this.user.answerQ = this.fromValues?.value.questionAnswer;
+    this.user.secretQ = this.fromValues?.value.secretQuestion;
+    this.user.sex = this.fromValues?.value.gend;
+    this.isSubmited = true;
+    console.log('user', this.user);
   }
 
-  defaultValueSecretQuestion='wBorn'
-  answer:string=''
+  defaultValueSecretQuestion = 'wBorn';
+  answer: string = '';
 
-  genders = ['male','female']
+  genders = ['male', 'female'];
+
+  // تفاوت setValue - patchValue
+  // setValue
+  // تمامی ورودی های فرم را باید بیاورید و اگر قرار است مقدار نگیرند باید "" بدهید
+  // patchValue
+  // میتوانید مقادیر دلخواه خود را در فرم مقدار دیفالت بدهید
+  suggestUsername() {
+    this.fromValues?.form.patchValue({
+      userInfo: {
+        userName: 'Ali',
+      },
+    });
+  }
+
+  setValues() {
+    this.fromValues?.setValue({
+      gend: 'male',
+      questionAnswer: 'D-Answer',
+      secretQuestion: 'wBorn',
+      userInfo: { email: 'D-email', userName: 'D-name' },
+    });
+  }
+
+  // ارسال با reactives forms
+  onSubmit1() {
+    console.log(this.signForms);
+  }
+
+  addMember() {
+    const control = new FormControl(null, Validators.required);
+    (<FormArray>this.signForms.get('family1')).push(control);
+    // (this.signForms.get('family1') as FormArray).push(control);
+  }
+  get castedControlFamily() {
+    // return (<FormArray>this.signForms.get('family1')).controls
+    return (this.signForms.get('family1') as FormArray)?.controls;
+  }
+  resetForm() {
+    this.signForms.reset();
+  }
 }

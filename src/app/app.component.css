@@ -45,7 +45,7 @@ option{
 form>div{
   margin: 10px 0px;
 }
-form>button{
+form button{
   width:150px;
   height: 30px;
   border: 1px solid lightgray;
