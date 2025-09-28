@@ -14,9 +14,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf, CommonModule } from '@angular/common';
 // برای reactive Forms باید ایمپورت شود
 import { FormGroup } from '@angular/forms';
+import { costumPipe } from './costum.pipe';
+import { SearchPipePipe } from './pipe/search-pipe.pipe';
 // تعریف اینترفیس برای اینکه بتوانیم مقادیر پر شده فرم را بگیریم و نمایش بدهیم
 interface IUser {
   uName: string;
@@ -39,6 +41,9 @@ interface IUser {
     NgForOf,
     // برایreactive Forms باید اضافه شود
     ReactiveFormsModule,
+   CommonModule,
+   costumPipe,
+   SearchPipePipe
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -244,5 +249,27 @@ export class AppComponent implements OnInit {
   }
   resetForm() {
     this.signForms.reset();
+  }
+
+  // pipe
+  pipeValue=[{
+    productName:'laptop',
+    productDate:new Date()
+  },
+  {
+    productName:'cellphone',
+    productDate:new Date()
+  }
+  ]
+
+  // search with pipe
+  searchText:string=''
+
+  // pure & impure PIpe
+  AddProduct(){
+    this.pipeValue.push({
+    productName:'Watch',
+    productDate:new Date()
+  })
   }
 }

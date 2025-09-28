@@ -109,8 +109,8 @@
   <div formArrayName="family1">
     <h4>Your Family</h4>
     <button (click)="addMember()">Add member</button>
-    <div *ngFor="let member of castedControlFamily,let i = index">
-      <input type="text" [formControlName]="i"/>
+    <div *ngFor="let member of castedControlFamily; let i = index">
+      <input type="text" [formControlName]="i" />
     </div>
   </div>
   <button type="submit">send</button>
@@ -120,3 +120,17 @@
     >plz enter valid Data</span
   >
 </form>
+
+<hr />
+<br />
+<h3>Using Pipe</h3>
+<input type="text" [(ngModel)]="searchText" />
+<button (click)="AddProduct()">Add Product</button>
+<p *ngFor="let item of pipeValue | searchPipe:searchText:'productName'; let i = index ">
+  <span>{{ item.productName | substrPipe:8}}</span>
+  <span>--**--</span>
+  <span *ngIf="i % 2 !== 0">{{ item.productDate | date : "short" | uppercase}}</span>
+  <span *ngIf="i % 2 === 0">{{ item.productDate }}</span>
+</p>
+<hr />
+<br />
