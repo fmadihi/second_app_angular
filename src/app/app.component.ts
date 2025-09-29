@@ -272,4 +272,10 @@ export class AppComponent implements OnInit {
     productDate:new Date()
   })
   }
+
+  appStatus= new Promise((resolve,reject)=>{
+    setTimeout(() => {
+      resolve('ONLINE')
+    }, 2000);
+  })
 }

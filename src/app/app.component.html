@@ -124,6 +124,7 @@
 <hr />
 <br />
 <h3>Using Pipe</h3>
+<h2>Status: {{appStatus | async}}</h2>
 <input type="text" [(ngModel)]="searchText" />
 <button (click)="AddProduct()">Add Product</button>
 <p *ngFor="let item of pipeValue | searchPipe:searchText:'productName'; let i = index ">
